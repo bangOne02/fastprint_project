@@ -1,0 +1,108 @@
+/*
+SQLyog Community v13.2.1 (64 bit)
+MySQL - 10.4.32-MariaDB : Database - fastprint_db
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`fastprint_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+
+USE `fastprint_db`;
+
+/*Table structure for table `kategori` */
+
+DROP TABLE IF EXISTS `kategori`;
+
+CREATE TABLE `kategori` (
+  `id_kategori` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kategori` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_kategori`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `kategori` */
+
+insert  into `kategori`(`id_kategori`,`nama_kategori`) values 
+(5,'L QUEENLY'),
+(6,'L MTH AKSESORIS (IM)'),
+(7,'L MTH TABUNG (LK)'),
+(8,'SP MTH SPAREPART (LK)'),
+(9,'CI MTH TINTA LAIN (IM)'),
+(10,'L MTH AKSESORIS (LK)'),
+(11,'S MTH STEMPEL (IM)');
+
+/*Table structure for table `produk` */
+
+DROP TABLE IF EXISTS `produk`;
+
+CREATE TABLE `produk` (
+  `id_produk` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_produk` varchar(200) DEFAULT NULL,
+  `harga` int(11) DEFAULT NULL,
+  `kategori_id` int(11) DEFAULT NULL,
+  `status_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_produk`),
+  KEY `kategori_id` (`kategori_id`),
+  KEY `status_id` (`status_id`),
+  CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`id_kategori`),
+  CONSTRAINT `produk_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `produk` */
+
+insert  into `produk`(`id_produk`,`nama_produk`,`harga`,`kategori_id`,`status_id`) values 
+(9,'ALCOHOL GEL POLISH CLEANSER GP-CLN01',12500,5,1),
+(10,'ALUMUNIUM FOIL ALL IN ONE BULAT 23mm IM',1000,6,1),
+(11,'ALUMUNIUM FOIL ALL IN ONE BULAT 30mm IM',1000,6,1),
+(12,'ALUMUNIUM FOIL ALL IN ONE SHEET 250mm IM',12500,6,2),
+(13,'ALUMUNIUM FOIL HDPE/PE BULAT 23mm IM',12500,6,1),
+(14,'ALUMUNIUM FOIL HDPE/PE BULAT 30mm IM',1000,6,1),
+(15,'ALUMUNIUM FOIL HDPE/PE SHEET 250mm IM',13000,6,2),
+(16,'ALUMUNIUM FOIL PET SHEET 250mm IM',1000,6,2),
+(17,'ARM PENDEK MODEL U',13000,6,1),
+(18,'ARM SUPPORT KECIL',13000,7,2),
+(19,'ARM SUPPORT KOTAK PUTIH',13000,6,2),
+(20,'ARM SUPPORT PENDEK POLOS',13000,7,1),
+(21,'ARM SUPPORT S IM',1000,6,2),
+(22,'ARM SUPPORT T (IMPORT)',13000,6,1),
+(23,'ARM SUPPORT T - MODEL 1 ( LOKAL )',10000,7,1),
+(24,'BLACK LASER TONER FP-T3 (100gr)',13000,6,2),
+(25,'BODY PRINTER CANON IP2770',500,8,1),
+(26,'BODY PRINTER T13X',15000,8,1),
+(27,'BOTOL 1000ML BLUE KHUSUS UNTUK EPSON R1800/R800 - 4180 IM (T054920)',10000,9,1),
+(28,'BOTOL 1000ML CYAN KHUSUS UNTUK EPSON R1800/R800/R1900/R2000 - 4120 IM (T054220)',10000,9,2),
+(29,'BOTOL 1000ML GLOSS OPTIMIZER KHUSUS UNTUK EPSON R1800/R800/R1900/R2000/IX7000/MG6170 - 4100 IM (T054020)',1500,9,1),
+(30,'BOTOL 1000ML L.LIGHT BLACK KHUSUS UNTUK EPSON 2400 - 0599 IM',1500,9,2),
+(31,'BOTOL 1000ML LIGHT BLACK KHUSUS UNTUK EPSON 2400 - 0597 IM',1500,9,2),
+(32,'BOTOL 1000ML MAGENTA KHUSUS UNTUK EPSON R1800/R800/R1900/R2000 - 4140 IM (T054320)',1000,9,1),
+(33,'BOTOL 1000ML MATTE BLACK KHUSUS UNTUK EPSON R1800/R800/R1900/R2000 - 3503 IM (T054820)',1500,9,2),
+(34,'BOTOL 1000ML ORANGE KHUSUS UNTUK EPSON R1900/R2000 IM - 4190 (T087920)',1500,9,1),
+(35,'BOTOL 1000ML RED KHUSUS UNTUK EPSON R1800/R800/R1900/R2000 - 4170 IM (T054720)',1000,9,2),
+(36,'BOTOL 1000ML YELLOW KHUSUS UNTUK EPSON R1800/R800/R1900/R2000 - 4160 IM (T054420)',1500,9,2),
+(37,'BOTOL KOTAK 100ML LK',1000,10,1),
+(38,'BOTOL 10ML IM',1000,11,2);
+
+/*Table structure for table `status` */
+
+DROP TABLE IF EXISTS `status`;
+
+CREATE TABLE `status` (
+  `id_status` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_status` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `status` */
+
+insert  into `status`(`id_status`,`nama_status`) values 
+(1,'bisa dijual'),
+(2,'tidak bisa dijual');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

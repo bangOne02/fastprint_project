@@ -70,10 +70,10 @@ class Produk extends CI_Controller {
          $url = "https://recruitment.fastprint.co.id/tes/api_tes_programmer";
 
         // username dari soal
-        $username = "tesprogrammer010226C13";
+        $username = "tesprogrammer020226C09";
 
         // password sesuai aturan
-        $password_plain = "bisacoding-01-02-26";
+        $password_plain = "bisacoding-02-02-26";
         $password = md5($password_plain);
 
         $postData = [
@@ -93,16 +93,15 @@ class Produk extends CI_Controller {
         $data = json_decode($response, true);
 
         // DEBUG jika gagal
-        if(isset($data['error'])){
-            echo $data['ket'];
+        if (isset($data['error']) && $data['error'] != 0) {
             echo "<br>Password digunakan: ".$password_plain;
             return;
         }
 
         // SIMPAN KE DATABASE
-        foreach($data as $item){
+        foreach ($data['data'] as $item) {
 
-            $kategori = $this->produk->get_kategori($item['kategori']);
+            $kategori = $this->Produk_model->get_kategori($item['kategori']);
             if(!$kategori){
                 $this->db->insert('kategori',['nama_kategori'=>$item['kategori']]);
                 $kategori_id = $this->db->insert_id();
@@ -110,7 +109,7 @@ class Produk extends CI_Controller {
                 $kategori_id = $kategori->id_kategori;
             }
 
-            $status = $this->produk->get_status($item['status']);
+            $status = $this->Produk_model->get_status($item['status']);
             if(!$status){
                 $this->db->insert('status',['nama_status'=>$item['status']]);
                 $status_id = $this->db->insert_id();
